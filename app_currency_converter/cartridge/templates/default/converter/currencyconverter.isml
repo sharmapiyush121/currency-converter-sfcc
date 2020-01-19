@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="${URLUtils.staticURL('/js/converter.js')}"></script>
 </head>
 <body>
 
@@ -14,7 +15,7 @@
   <h1>Currency Converter</h1>
   <p>Select the currency and enter the value.</p>
 
-  <form action="${URLUtils.url(Converter-OnChange)}" method="post" id="ConverterForm">
+  <form action="${URLUtils.url('Converter-OnChange')}" method="post" id="ConverterForm">
     <div class="row">
       <div class="col-sm-2"><input type="number" id="euros" name="euros" value=""/></div>
       <div class="col-sm-10">Euros</div>
@@ -22,7 +23,7 @@
     <div class="row">
       <div class="col-sm-2"><input type="number" id="other" name="other" value="" disabled="true"/></div>
       <div class="col-sm-10">
-        <select>
+        <select id="symbol">
           <isloop items="${pdict.Symbols}" var="symbol">
               <option value="${symbol.value}"><isprint value="${symbol.displayValue}" encoding="off" /></option>
           </isloop>
