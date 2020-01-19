@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <title>Currency Converter</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script src="${URLUtils.staticURL('/js/converter.js')}"></script>
@@ -25,7 +25,7 @@
       <div class="col-sm-10">
         <select id="symbol">
           <isloop items="${pdict.Symbols}" var="symbol">
-              <option value="${symbol.value}"><isprint value="${symbol.displayValue}" encoding="off" /></option>
+              <option value="${symbol.value}"><isprint value="${symbol.displayValue}" /></option>
           </isloop>
         </select>
       </div>

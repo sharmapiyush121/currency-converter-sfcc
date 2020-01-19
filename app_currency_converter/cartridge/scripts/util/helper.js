@@ -9,11 +9,11 @@ var currencyServices = require('../services/currencyService');
 function getCurrencySymbols() {
     var symbolsArray = [];
     var symbolServiceResponse = currencyServices.symbolsService.call();
-    if(symbolServiceResponse.status === 'OK'){
+    if (symbolServiceResponse.status === 'OK') {
         for (let key in symbolServiceResponse.object.body.symbols) {
             symbolsArray.push({
-                'displayValue' : symbolServiceResponse.object.body.symbols[key],
-                'value' : key
+                'displayValue': symbolServiceResponse.object.body.symbols[key],
+                'value': key
             });
         }
     }
@@ -25,12 +25,31 @@ function getCurrencySymbols() {
  * @returns {object} Returns the object with currency symbols
  */
 function getConversionValue() {
-    var conversionServiceResponse = currencyServices.conversionService.call();
-    cacheValueToCustomObj()
-    if(conversionServiceResponse.status === 'OK'){
-        var euroValue = new Number(request.httpParameterMap.euro.value);
-        var symbol = request.httpParameterMap.symbol.value;
-        return conversionServiceResponse.object.body.rates[symbol] * euroValue;
+    var rates = null;
+    var euroValue = new Number(request.httpParameterMap.euro.value);
+    var symbol = request.httpParameterMap.symbol.value;
+
+    var currencyConvertObj = getCurrencyConvertObj();
+    if (currencyConvertObj !== null) {
+        var Calendar = require('dw/util/Calendar');
+        var lastModfied = currencyConvertObj.lastModified.getTime();
+        var calendar = new Calendar();
+        var nowTime = calendar.getTime().getTime();
+        if ((nowTime - lastModfied) <= 900000) {
+            var rates = JSON.parse(currencyConvertObj.custom.conversionValues);
+        }
+    }
+
+    if (rates === null) {
+        var conversionServiceResponse = currencyServices.conversionService.call();
+        if (conversionServiceResponse.status === 'OK') {
+            cacheValueToCustomObj(conversionServiceResponse.object.body.rates);
+            //return conversionServiceResponse.object.body.rates[symbol] * euroValue;
+            rates = conversionServiceResponse.object.body.rates;
+        }
+    }
+    if(!empty(rates)){
+        return rates[symbol] * euroValue;
     }
     return null;
 }
@@ -43,7 +62,7 @@ function cacheValueToCustomObj(obj) {
     var Transaction = require('dw/system/Transaction');
     var currencyConvertObj = getCurrencyConvertObj();
 
-    Transaction.wrap(function(){
+    Transaction.wrap(function () {
         currencyConvertObj.custom.conversionValues = typeof obj !== 'String' ? JSON.stringify(obj) : obj;
     });
 }
@@ -57,7 +76,7 @@ function getCurrencyConvertObj() {
     var currencyConvertObj = CustomObjectMgr.getCustomObject("currencyConvert", "default");
     if (currencyConvertObj === null) {
         var Transaction = require('dw/system/Transaction');
-        Transaction.wrap(function(){
+        Transaction.wrap(function () {
             currencyConvertObj = CustomObjectMgr.createCustomObject("currencyConvert", "default");
         });
     }
@@ -66,5 +85,5 @@ function getCurrencyConvertObj() {
 
 module.exports = {
     getCurrencySymbols: getCurrencySymbols,
-    getConversionValue : getConversionValue
+    getConversionValue: getConversionValue
 };

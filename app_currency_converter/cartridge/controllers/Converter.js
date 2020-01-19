@@ -28,7 +28,7 @@ function onChange() {
     var value = helper.getConversionValue();
     responseUtils.renderJSON({
         success: value !== null ? true : false,
-        value : value
+        value: value
     });
     return;
 }
