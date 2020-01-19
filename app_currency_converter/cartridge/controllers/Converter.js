@@ -8,12 +8,15 @@
 
 var app = require('app_storefront_controllers/cartridge/scripts/app');
 var guard = require('app_storefront_controllers/cartridge/scripts/guard');
-
+var helper = require('~/cartridge/scripts/util/helper')
 /**
  * Renders the home page.
  */
 function show() {
-    app.getView().render('converter/currencyconverter');
+    var symbols = helper.getCurrencySymbols();
+    app.getView({
+        Symbols : symbols
+    }).render('converter/currencyconverter');
 }
 
 /*
