@@ -20,7 +20,7 @@
       <div class="col-sm-2"><input type="number" id="euros" name="euros" value=""/></div>
       <div class="col-sm-10">Euros</div>
     </div>
-    <div class="row">
+    <div class="row" style="padding-top:10px;">
       <div class="col-sm-2"><input type="number" id="other" name="other" value="" disabled="true"/></div>
       <div class="col-sm-10">
         <select id="symbol">

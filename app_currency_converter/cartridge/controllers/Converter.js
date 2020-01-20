@@ -14,6 +14,7 @@ var helper = require('~/cartridge/scripts/util/helper')
  * Renders the Currency Converter page.
  */
 function show() {
+    // Call Serivce to get all the available currencies
     var symbols = helper.getCurrencySymbols();
     app.getView({
         Symbols: symbols
@@ -21,10 +22,11 @@ function show() {
 }
 
 /**
- * Renders the home page.
+ * Renders the value for the conversion call.
  */
 function onChange() {
     var responseUtils = require('app_storefront_controllers/cartridge/scripts/util/Response');
+    // Call the conversion helper to get the result
     var value = helper.getConversionValue();
     responseUtils.renderJSON({
         success: value !== null ? true : false,

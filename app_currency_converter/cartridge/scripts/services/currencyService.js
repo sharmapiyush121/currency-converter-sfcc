@@ -4,7 +4,7 @@
 var dwsvc = require('dw/svc');
 
 /**
- * Creates a fixer.io API service to get currnecy Symbols
+ * Creates a fixer.io API service to get currency Symbols
  * @return {dw.svc.service} returns a REST service
  */
 var symbolsService = dwsvc.LocalServiceRegistry.createService("symbolsService", {
@@ -25,7 +25,7 @@ var symbolsService = dwsvc.LocalServiceRegistry.createService("symbolsService", 
 
 
 /**
- * Creates a fixer.io API service to get currnecy Symbols
+ * Creates a fixer.io API service to get currency conversion rates
  * @return {dw.svc.service} returns a REST service
  */
 var conversionService = dwsvc.LocalServiceRegistry.createService("conversionService", {
